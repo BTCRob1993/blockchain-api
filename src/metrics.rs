@@ -198,33 +198,41 @@ impl Metrics {
 
 impl Metrics {
     pub fn add_rpc_call(&self, chain_id: String) {
-        self.rpc_call_counter
-            .add(&otel::Context::new(), 1, &[otel::KeyValue::new(
-                "chain.id", chain_id,
-            )]);
+        self.rpc_call_counter.add(
+            &otel::Context::new(),
+            1,
+            &[otel::KeyValue::new("chain.id", chain_id)],
+        );
     }
 
     pub fn add_http_call(&self, code: u16, route: String) {
-        self.http_call_counter.add(&otel::Context::new(), 1, &[
-            otel::KeyValue::new("code", i64::from(code)),
-            otel::KeyValue::new("route", route),
-        ]);
+        self.http_call_counter.add(
+            &otel::Context::new(),
+            1,
+            &[
+                otel::KeyValue::new("code", i64::from(code)),
+                otel::KeyValue::new("route", route),
+            ],
+        );
     }
 
     pub fn add_http_latency(&self, code: u16, route: String, latency: f64) {
-        self.http_latency_tracker
-            .record(&otel::Context::new(), latency, &[
+        self.http_latency_tracker.record(
+            &otel::Context::new(),
+            latency,
+            &[
                 otel::KeyValue::new("code", i64::from(code)),
                 otel::KeyValue::new("route", route),
-            ])
+            ],
+        )
     }
 
     pub fn add_external_http_latency(&self, provider_kind: ProviderKind, latency: f64) {
-        self.http_external_latency_tracker
-            .record(&otel::Context::new(), latency, &[otel::KeyValue::new(
-                "provider",
-                provider_kind.to_string(),
-            )])
+        self.http_external_latency_tracker.record(
+            &otel::Context::new(),
+            latency,
+            &[otel::KeyValue::new("provider", provider_kind.to_string())],
+        )
     }
 
     pub fn add_rejected_project(&self) {
@@ -238,27 +246,36 @@ impl Metrics {
     }
 
     pub fn add_rate_limited_call(&self, provider: &dyn RpcProvider, project_id: String) {
-        self.rate_limited_call_counter
-            .add(&otel::Context::new(), 1, &[
+        self.rate_limited_call_counter.add(
+            &otel::Context::new(),
+            1,
+            &[
                 otel::KeyValue::new("provider_kind", provider.provider_kind().to_string()),
                 otel::KeyValue::new("project_id", project_id),
-            ])
+            ],
+        )
     }
 
     pub fn add_failed_provider_call(&self, provider: &dyn RpcProvider) {
-        self.provider_failed_call_counter
-            .add(&otel::Context::new(), 1, &[otel::KeyValue::new(
+        self.provider_failed_call_counter.add(
+            &otel::Context::new(),
+            1,
+            &[otel::KeyValue::new(
                 "provider",
                 provider.provider_kind().to_string(),
-            )])
+            )],
+        )
     }
 
     pub fn add_finished_provider_call(&self, provider: &dyn RpcProvider) {
-        self.provider_finished_call_counter
-            .add(&otel::Context::new(), 1, &[otel::KeyValue::new(
+        self.provider_finished_call_counter.add(
+            &otel::Context::new(),
+            1,
+            &[otel::KeyValue::new(
                 "provider",
                 provider.provider_kind().to_string(),
-            )])
+            )],
+        )
     }
 
     pub fn add_status_code_for_provider(
@@ -267,20 +284,26 @@ impl Metrics {
         status: http::StatusCode,
         chain_id: String,
     ) {
-        self.provider_status_code_counter
-            .add(&otel::Context::new(), 1, &[
+        self.provider_status_code_counter.add(
+            &otel::Context::new(),
+            1,
+            &[
                 otel::KeyValue::new("provider", provider.provider_kind().to_string()),
                 otel::KeyValue::new("status_code", format!("{}", status.as_u16())),
                 otel::KeyValue::new("chain_id", chain_id),
-            ])
+            ],
+        )
     }
 
     pub fn record_provider_weight(&self, provider: &ProviderKind, chain_id: String, weight: u64) {
-        self.weights_value_recorder
-            .record(&otel::Context::new(), weight, &[
+        self.weights_value_recorder.record(
+            &otel::Context::new(),
+            weight,
+            &[
                 otel::KeyValue::new("provider", provider.to_string()),
                 otel::KeyValue::new("chain_id", chain_id),
-            ])
+            ],
+        )
     }
 
     pub fn add_identity_lookup(&self) {
@@ -289,11 +312,11 @@ impl Metrics {
     }
 
     pub fn add_identity_lookup_success(&self, source: &IdentityLookupSource) {
-        self.identity_lookup_success_counter
-            .add(&otel::Context::new(), 1, &[otel::KeyValue::new(
-                "source",
-                source.as_str(),
-            )]);
+        self.identity_lookup_success_counter.add(
+            &otel::Context::new(),
+            1,
+            &[otel::KeyValue::new("source", source.as_str())],
+        );
     }
 
     pub fn add_identity_lookup_latency(&self, latency: Duration, source: &IdentityLookupSource) {
@@ -368,9 +391,10 @@ impl Metrics {
     }
 
     pub fn add_websocket_connection(&self, chain_id: String) {
-        self.websocket_connection_counter
-            .add(&otel::Context::new(), 1, &[otel::KeyValue::new(
-                "chain_id", chain_id,
-            )]);
+        self.websocket_connection_counter.add(
+            &otel::Context::new(),
+            1,
+            &[otel::KeyValue::new("chain_id", chain_id)],
+        );
     }
 }

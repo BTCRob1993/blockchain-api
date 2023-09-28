@@ -3,10 +3,7 @@ use {
     crate::{
         error::{RpcError, RpcResult},
         handlers::{
-            HistoryQueryParams,
-            HistoryResponseBody,
-            HistoryTransaction,
-            HistoryTransactionMetadata,
+            HistoryQueryParams, HistoryResponseBody, HistoryTransaction, HistoryTransactionMetadata,
         },
     },
     async_trait::async_trait,

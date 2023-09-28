@@ -23,7 +23,7 @@ impl AsyncTestContext for ServerContext {
             {
                 let project_id = env::var("PROJECT_ID").expect("PROJECT_ID must be set");
                 RpcProxy {
-                    private_addr: None,
+                    prometheus_port: None,
                     public_port: None,
                     public_addr,
                     project_id,

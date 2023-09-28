@@ -1,14 +1,8 @@
 use {
     crate::{
-        analytics::RPCAnalytics,
-        env::Config,
-        error::RpcError,
-        handlers::identity::IdentityResponse,
-        metrics::Metrics,
-        project::Registry,
-        providers::ProviderRepository,
-        storage::KeyValueStorage,
-        utils::build::CompileInfo,
+        analytics::RPCAnalytics, env::Config, error::RpcError,
+        handlers::identity::IdentityResponse, metrics::Metrics, project::Registry,
+        providers::ProviderRepository, storage::KeyValueStorage, utils::build::CompileInfo,
     },
     cerberus::project::ProjectData,
     std::sync::Arc,

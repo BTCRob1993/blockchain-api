@@ -1,57 +1,92 @@
-variable "region" {
-  type    = string
-  default = "eu-central-1"
-}
+#-------------------------------------------------------------------------------
+# Configuration
 
-variable "ecr_app_version" {
-  description = "The tag of the app image to deploy."
+variable "grafana_auth" {
+  description = "The API Token for the Grafana instance"
   type        = string
-  default     = "latest"
+  default     = ""
 }
 
-variable "infura_project_id" {
-  type = string
+#-------------------------------------------------------------------------------
+# Application
+
+variable "name" {
+  description = "The name of the application"
+  type        = string
+  default     = "keyserver"
 }
 
-variable "pokt_project_id" {
-  type = string
+variable "region" {
+  description = "AWS region to deploy to"
+  type        = string
 }
 
-variable "zerion_api_key" {
-  type = string
+variable "image_version" {
+  description = "The version of the image to deploy"
+  type        = string
 }
 
-variable "azs" {
-  type    = list(string)
-  default = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
-}
-
-variable "grafana_endpoint" {
-  type = string
-}
+#-------------------------------------------------------------------------------
+# Project Registry
 
 variable "registry_api_endpoint" {
-  type = string
+  description = "The endpoint of the registry API"
+  type        = string
 }
 
 variable "registry_api_auth_token" {
-  type      = string
-  sensitive = true
-}
-
-variable "project_data_cache_ttl" {
-  type = number
-}
-
-variable "autoscaling_max_instances" {
-  type = number
-}
-
-variable "autoscaling_min_instances" {
-  type = number
-}
-
-variable "analytics_data_lake_kms_key_arn" {
-  description = "The ARN of KMS encryption key for the data-lake bucket."
+  description = "The auth token for the registry API"
   type        = string
+  sensitive   = true
+}
+
+variable "project_cache_ttl" {
+  description = "The TTL for project data cache"
+  type        = number
+  default     = 300
+}
+
+
+#-------------------------------------------------------------------------------
+# Providers
+
+variable "infura_project_id" {
+  description = "The project ID for Infura"
+  type        = string
+  sensitive   = true
+}
+
+variable "pokt_project_id" {
+  description = "The project ID for POKT"
+  type        = string
+  sensitive   = true
+}
+
+variable "zerion_api_key" {
+  description = "The API key for Zerion"
+  type        = string
+  sensitive   = true
+}
+
+#-------------------------------------------------------------------------------
+# Analytics
+
+variable "geoip_db_key" {
+  description = "The name to the GeoIP database"
+  type        = string
+}
+
+#-------------------------------------------------------------------------------
+# Monitoring
+
+variable "notification_channels" {
+  description = "The notification channels to send alerts to"
+  type        = list(any)
+  default     = []
+}
+
+variable "betterstack_cloudwatch_webhook" {
+  description = "The BetterStack webhook to send CloudWatch alerts to"
+  type        = string
+  sensitive   = true
 }
